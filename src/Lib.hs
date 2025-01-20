@@ -1,12 +1,12 @@
 module Lib
-    ( someFunc
+    ( helloFunc
     ) where
 
 import PGF2
 import qualified Data.Map as Map
 
-someFunc :: IO ()
-someFunc = do
+helloFunc :: IO ()
+helloFunc = do
     pgf <- readPGF "Hello.pgf"
     -- First let's see what languages are available
     putStrLn "Available languages:"
