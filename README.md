@@ -13,11 +13,36 @@ The project requires the following dependencies:
 
 This project has only been tested on MacOS Sequoia 15.2 with Haskell Stack 3.3.1, Grammatical Framework 3.11, and PGF2 1.3.0, and GHC 8.10.7.
 
+## Folder Structure
+
+```
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+├── Setup.hs
+├── app
+│   └── Main.hs
+├── grammars
+│   ├── Hello.gf
+│   ├── Hello.pgf
+│   ├── HelloEng.gf
+│   └── HelloIta.gf
+├── grammatical-framework-haskell-starter-project.cabal
+├── package.yaml
+├── src
+│   └── Lib.hs
+├── stack.yaml
+├── stack.yaml.lock
+└── test
+    └── Spec.hs
+```
+
 ## Usage
 
 The project comes with a simple example grammar which can be built using the `gf` command line tool to generate a PGF file.
 
 ```bash
+cd grammars
 gf -make Hello.gf HelloEng.gf HelloIta.gf
 ```
 
