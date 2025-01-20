@@ -7,7 +7,7 @@ import qualified Data.Map as Map
 
 helloFunc :: IO ()
 helloFunc = do
-    pgf <- readPGF "Hello.pgf"
+    pgf <- readPGF "grammars/Hello.pgf"
     -- First let's see what languages are available
     putStrLn "Available languages:"
     print $ Map.keys (languages pgf)

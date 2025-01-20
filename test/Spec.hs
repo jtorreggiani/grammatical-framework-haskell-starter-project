@@ -4,7 +4,7 @@ import PGF2
 
 -- Helper function to load PGF file for tests
 loadTestPGF :: IO PGF
-loadTestPGF = readPGF "Hello.pgf"
+loadTestPGF = readPGF "grammars/Hello.pgf"
 
 main :: IO ()
 main = hspec $ do
@@ -27,7 +27,9 @@ main = hspec $ do
             let eng = languages pgf Map.! "HelloEng"
             let parseResult = parse eng (startCat pgf) "hello world"
             case parseResult of
-                ParseOk ((_,_):_) -> True `shouldBe` True
+                ParseOk ((tree,_):_) -> do
+                    let englishText = linearize eng tree
+                    englishText `shouldBe` "hello world"
                 _ -> expectationFailure "Failed to parse English input"
 
         it "should translate from English to Italian" $ do
@@ -38,8 +40,19 @@ main = hspec $ do
             case parseResult of
                 ParseOk ((tree,_):_) -> do
                     let italianText = linearize ita tree
-                    not (null italianText) `shouldBe` True
+                    italianText `shouldBe` "ciao mondo"
                 _ -> expectationFailure "Failed to translate to Italian"
+
+        it "should translate from Italian to English" $ do
+            pgf <- loadTestPGF
+            let eng = languages pgf Map.! "HelloEng"
+            let ita = languages pgf Map.! "HelloIta"
+            let parseResult = parse ita (startCat pgf) "ciao mondo"
+            case parseResult of
+                ParseOk ((tree,_):_) -> do
+                    let englishText = linearize eng tree
+                    englishText `shouldBe` "hello world"
+                _ -> expectationFailure "Failed to translate from Italian"
 
         it "should handle invalid input gracefully" $ do
             pgf <- loadTestPGF
